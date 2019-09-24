@@ -22,12 +22,21 @@ public class NumberBreakdown_ {
     @Parameterized.Parameters
     public static Object[][] cases() {
         return new Object[][] {
-
+                {0, new int[][]{}},
+                {1, new int[][]{{1,0}}},
+                {2, new int[][]{{2,0}}},
+                {10, new int[][]{{1,1}}},
+                {11, new int[][]{{1,1},{1,0}}}
         };
     }
 
     private static int[][] breakdownOf(int number) {
-        return null;
+        if (number == 0) return new int[][]{};
+        if (number/10 > 0) {
+            if(number%10 != 0) return new int[][]{{number/10, 1}, breakdownOf(number%10)[0]};
+            else return new int[][]{{number/10, 1}};
+        }
+        return new int[][]{{number, 0}};
     }
 
 }
