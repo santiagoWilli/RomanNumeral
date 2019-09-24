@@ -31,18 +31,32 @@ public class NumberBreakdown_ {
                 {10, new int[][]{{1,1}}},
                 {11, new int[][]{{1,1},{1,0}}},
                 {100, new int[][]{{1,2}}},
-                {101, new int[][]{{1,2}, {1,0}}}
+                {101, new int[][]{{1,2}, {1,0}}},
+                {102, new int[][]{{1,2}, {2,0}}},
         };
     }
 
     private static int[][] breakdownOf(int number) {
-        if (number == 0) return new int[][]{};
-        if (number == 100) return new int[][]{{1,2}};
-        if (number == 101) return new int[][]{{1,2},{1,0}};
-        if (number >= 10) {
-            if(number%10 != 0) return new int[][]{{number/10, 1}, breakdownOf(number%10)[0]};
-            else return new int[][]{{number/10, 1}};
+        int[][] breakdown = new int[setArrayLength(number)][];
+
+        if(number >= 100) {
+            breakdown[0] = new int[]{1,2};
+            if(number%100 == 1) breakdown[1] = new int[]{1,0};
+            else if(number%100 == 2) breakdown[1] = new int[]{2,0};
         }
-        return new int[][]{{number, 0}};
+        else if (number >= 10) {
+            breakdown[0] = new int[]{1,1};
+            if(number%10 != 0) breakdown[1] = new int[]{number%10, 0};
+        }
+        else if (number > 0) breakdown[0] = new int[]{number, 0};
+        return breakdown;
+    }
+
+    private static int setArrayLength(int number) {
+        String numberString = String.valueOf(number);
+        int length = numberString.length();
+        int numberOfCeros = 0;
+        for(int i=0; i<length; i++) {if(numberString.charAt(i) == '0') numberOfCeros++;}
+        return length - numberOfCeros;
     }
 }
