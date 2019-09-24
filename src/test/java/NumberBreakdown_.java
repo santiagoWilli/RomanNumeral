@@ -34,6 +34,8 @@ public class NumberBreakdown_ {
                 {100, new int[][]{{1,2}}},
                 {101, new int[][]{{1,2}, {1,0}}},
                 {102, new int[][]{{1,2}, {2,0}}},
+                {103, new int[][]{{1,2}, {3,0}}},
+                {110, new int[][]{{1,2}, {3,0}}},
         };
     }
 
@@ -41,9 +43,8 @@ public class NumberBreakdown_ {
         int[][] breakdown = new int[setArrayLength(number)][];
 
         if(number >= 100) {
-            breakdown[0] = new int[]{1,2};
-            if(number%100 == 1) breakdown[1] = new int[]{1,0};
-            else if(number%100 == 2) breakdown[1] = new int[]{2,0};
+            breakdown[0] = new int[]{number/100,2};
+            if(number%100 != 0) breakdown[1] = new int[]{number%100,0};
         }
         else if (number >= 10) {
             breakdown[0] = new int[]{number/10,1};
