@@ -35,22 +35,25 @@ public class NumberBreakdown_ {
                 {101, new int[][]{{1,2}, {1,0}}},
                 {102, new int[][]{{1,2}, {2,0}}},
                 {103, new int[][]{{1,2}, {3,0}}},
-                {110, new int[][]{{1,2}, {3,0}}},
+                {110, new int[][]{{1,2}, {1,1}}}
         };
     }
 
     private static int[][] breakdownOf(int number) {
         int[][] breakdown = new int[setArrayLength(number)][];
+        int i = 0; //array index
 
         if(number >= 100) {
-            breakdown[0] = new int[]{number/100,2};
-            if(number%100 != 0) breakdown[1] = new int[]{number%100,0};
+            breakdown[i++] = new int[]{number/100,2};
+            number%=100;
+            if(number/10 != 0) breakdown[i++] = new int[]{number/10,1};
+            if(number%10 != 0) breakdown[i] = new int[]{number%10,0};
         }
         else if (number >= 10) {
-            breakdown[0] = new int[]{number/10,1};
-            if(number%10 != 0) breakdown[1] = new int[]{number%10, 0};
+            breakdown[i++] = new int[]{number/10,1};
+            if(number%10 != 0) breakdown[i] = new int[]{number%10, 0};
         }
-        else if (number > 0) breakdown[0] = new int[]{number, 0};
+        else if (number > 0) breakdown[i] = new int[]{number, 0};
         return breakdown;
     }
 
