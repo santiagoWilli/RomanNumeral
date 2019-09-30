@@ -1,28 +1,22 @@
 package es.ulpgc;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class NumberBreakdown {
 
     public static int[][] breakdownOf(int number) {
-        int[][] breakdown = new int[setArrayLength(number)][];
-        int nZeros = String.valueOf(number).length() - 1;
-        int digit, i = 0;
+        int[] length = new int[]{String.valueOf(number).length() - 1};
 
-        while(nZeros > 1) {
-            if((digit = getDigit(number, nZeros)) != 0) {
-                breakdown[i] = new int[]{digit, nZeros};
-                i++;
-            }
-            number %= Math.pow(10, nZeros);
-            nZeros--;
-        }
-        if(number/10 != 0) breakdown[i++] = new int[]{number/10, 1};
-        if(number%10 != 0) breakdown[i] = new int[]{number%10, 0};
-
-        return breakdown;
+         return Arrays.stream(String.valueOf(number).split(""))
+                 .map(d -> new int[]{Integer.parseInt(d), length[0]--})
+                 .filter(t -> isNotZero(t[0]))
+                 .collect(Collectors.toList())
+                 .toArray(new int[setArrayLength(number)][]);
     }
 
-    private static int getDigit(int number, int nZeros) {
-        return (int) (number/Math.pow(10, nZeros));
+    private static boolean isNotZero(int number) {
+        return number != 0;
     }
 
     private static int setArrayLength(int number) {
