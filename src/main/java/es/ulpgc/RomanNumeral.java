@@ -12,14 +12,29 @@ public final class RomanNumeral {
         this.romanNumber = arabicToRomanNumber();
     }
 
+    //public RomanNumeral(String romanNumber) {}
+
     private String arabicToRomanNumber() {
-        return null;
+        if(arabicNumber < MIN || arabicNumber > MAX) throw new IllegalNumberException();
+        return romanNumberOfEachTuple();
+    }
+
+    private String romanNumberOfEachTuple() {
+        return new TupleMapper(getBreakdown()).toRomanValue();
+    }
+
+    private int[][] getBreakdown() {
+        return new NumberBreakdown(arabicNumber).breakdown();
     }
 
     public String getValue() {
         return romanNumber;
     }
 
-    public class IllegalNumberException extends RuntimeException {
+    public int getArabicNumber() {
+        return arabicNumber;
+    }
+
+    static class IllegalNumberException extends RuntimeException {
     }
 }

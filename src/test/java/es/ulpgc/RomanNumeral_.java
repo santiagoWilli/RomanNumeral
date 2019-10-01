@@ -35,7 +35,7 @@ public class RomanNumeral_ {
         return new Object[][]{
                 {1, "I", null},
                 {10, "X", null},
-                {23, "XIII", null},
+                {23, "XXIII", null},
                 {301, "CCCI", null},
                 {2327, "MMCCCXXVII", null},
                 {-2, null, RomanNumeral.IllegalNumberException.class},
