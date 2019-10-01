@@ -18,7 +18,7 @@ public class NumberBreakdown_ {
 
     @Test
     public void execute() {
-        assertThat(NumberBreakdown.breakdownOf(number)).isEqualTo(breakdown);
+        assertThat(new NumberBreakdown(number).breakdown()).isEqualTo(breakdown);
     }
 
     @Parameterized.Parameters
