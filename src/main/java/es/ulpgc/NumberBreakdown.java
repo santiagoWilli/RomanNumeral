@@ -1,7 +1,8 @@
 package es.ulpgc;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class NumberBreakdown {
 
@@ -12,17 +13,27 @@ public class NumberBreakdown {
     }
 
     public int[][] breakdown() {
-        int[] length = new int[]{String.valueOf(number).length() - 1};
-
-         return Arrays.stream(String.valueOf(number).split(""))
-                 .map(d -> tuple(d, length))
+         return stream()
+                 .map(this::tuple)
                  .filter(this::isNotZero)
                  .collect(Collectors.toList())
                  .toArray(int[][]::new);
     }
 
-    private int[] tuple(String d, int[] length) {
-        return new int[]{Integer.parseInt(d), length[0]--};
+    private String number() {
+        return String.valueOf(number);
+    }
+
+    private Stream<Integer> stream() {
+        return IntStream.iterate(0, l -> l + 1)
+                .limit(number().length())
+                .boxed();
+    }
+
+    private int[] tuple(int i) {
+        return new int[]{
+                Integer.parseInt(number().substring(i, i+1)),
+                number().length() - i - 1};
     }
 
     private boolean isNotZero(int[] tuple) {
